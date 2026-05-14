@@ -1,0 +1,64 @@
+# =============================================================================
+# APEX SSH config template
+# Copy to ~/.ssh/config and fill in your values.
+# chmod 600 ~/.ssh/config
+# =============================================================================
+
+# ---------------------------------------------------------------------------
+# Primary Codex host (the machine where Codex CLI runs)
+# ---------------------------------------------------------------------------
+Host codex-host
+    HostName         YOUR_SERVER_IP_OR_HOSTNAME
+    User             YOUR_USERNAME
+    Port             22
+    IdentityFile     ~/.ssh/apex_ed25519
+    IdentitiesOnly   yes
+
+    # Keep connection alive from iPhone (spotty cellular)
+    ServerAliveInterval  30
+    ServerAliveCountMax  6
+    TCPKeepAlive         yes
+
+    # Multiplex connections — reconnect is instant after disconnect
+    ControlMaster    auto
+    ControlPath      ~/.ssh/cm-%r@%h:%p
+    ControlPersist   10m
+
+    # Compression helps on slow Hawaiian cellular
+    Compression      yes
+
+    # Faster cipher (good for interactive sessions)
+    Ciphers          aes128-gcm@openssh.com,chacha20-poly1305@openssh.com
+
+# ---------------------------------------------------------------------------
+# Optional: jump/bastion host (if behind a firewall)
+# ---------------------------------------------------------------------------
+# Host bastion
+#     HostName     bastion.yourdomain.com
+#     User         YOUR_USERNAME
+#     IdentityFile ~/.ssh/apex_ed25519
+
+# To route codex-host through bastion, add:
+#     ProxyJump    bastion
+# to the codex-host block above.
+
+# ---------------------------------------------------------------------------
+# Optional: secondary dev box
+# ---------------------------------------------------------------------------
+# Host dev2
+#     HostName         YOUR_DEV2_IP
+#     User             YOUR_USERNAME
+#     IdentityFile     ~/.ssh/apex_ed25519
+#     ServerAliveInterval  30
+#     ControlMaster    auto
+#     ControlPath      ~/.ssh/cm-%r@%h:%p
+#     ControlPersist   10m
+
+# ---------------------------------------------------------------------------
+# Global defaults (applies to all hosts)
+# ---------------------------------------------------------------------------
+Host *
+    AddKeysToAgent       yes
+    IdentitiesOnly       yes
+    HashKnownHosts       yes
+    StrictHostKeyChecking accept-new
