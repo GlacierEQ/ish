@@ -54,7 +54,18 @@ jobs:
         run: deps/clone-linux.sh
       - name: Build
         if: matrix.kernel == 'ish'
-        run: xcodebuild -project iSH.xcodeproj -scheme iSH -arch arm64 -sdk iphoneos CODE_SIGNING_ALLOWED=NO
+        run: xcodebuild -project iSH.xcodeproj -scheme iSH -derivedDataPath DerivedData -configuration Release -arch arm64 -sdk iphoneos CODE_SIGNING_ALLOWED=NO
+      - name: Zip iSH App Bundle
+        if: matrix.kernel == 'ish'
+        run: |
+          cd DerivedData/Build/Products/Release-iphoneos
+          zip -r ../../../../iSH.app.zip iSH.app
+      - name: Upload iSH App Bundle Artifact
+        if: matrix.kernel == 'ish'
+        uses: actions/upload-artifact@v4
+        with:
+          name: iSH-ios-release-app
+          path: iSH.app.zip
       - name: Build
         if: matrix.kernel == 'linux'
         run: xcodebuild -project iSH.xcodeproj -scheme iSH+Linux -arch x86_64 -sdk iphonesimulator CODE_SIGNING_ALLOWED=NO
