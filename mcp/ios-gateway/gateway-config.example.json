@@ -1,0 +1,5 @@
+{
+  "pairing_secret": "REPLACE_WITH_AT_LEAST_32_RANDOM_CHARACTERS_FROM_A_CSPRNG",
+  "allowed_scopes": ["photos", "documents", "contacts", "calendar"],
+  "max_results": 100
+}

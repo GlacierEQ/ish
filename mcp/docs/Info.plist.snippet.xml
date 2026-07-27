@@ -1,0 +1,6 @@
+<!-- Add only capabilities your build actually uses. Write clear user-facing purpose strings. -->
+<key>NSPhotoLibraryUsageDescription</key><string>Select photos to export to your paired companion.</string>
+<key>NSContactsUsageDescription</key><string>Select contact information to export to your paired companion.</string>
+<key>NSCalendarsFullAccessUsageDescription</key><string>Select calendar events to export to your paired companion.</string>
+<key>NSHealthShareUsageDescription</key><string>Select health data you approve for export to your paired companion.</string>
+<!-- UIDocumentPicker needs no Files privacy key. Do not invent one. -->
